@@ -3,12 +3,13 @@ import {BorrowerInfoManager } from './managers/BorrowerInfoManager';
 
 class App {
 
-    public express
+    public express;
     private borrowerInfoManager: BorrowerInfoManager;
 
     constructor() {
         this.express = express();
         this.mountRoutes();
+        this.borrowerInfoManager = new BorrowerInfoManager();
     }
 
     private mountRoutes (): void {
@@ -17,8 +18,10 @@ class App {
             res.json({message: 'Hello World :('});
         });
 
-        router.get('/:ssn', (req, res) => {
-            res.json(this.borrowerInfoManager.getBorrowerInfo(req.params['ssn']));
+        router.get('/:ssn', (req, res) => {            
+            this.borrowerInfoManager.getBorrowerInfo(req.params['ssn']).then(val => {
+                res.json({message: val});
+            });
         });
 
         this.express.use('/', router);

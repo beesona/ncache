@@ -1,21 +1,33 @@
 import { IBorrowerInfoModel } from "../models/IBorrowerInfoModel";
-import { RedisClient } from "redis";
+import { Tedis, TedisPool } from "tedis";
+import { get } from 'request-promise-native';
 
 export class BorrowerInfoManager {
 
     private BORR_URL: string = 'http://dev.intsvc.nelnet.net:4106/api/mma/v1/borrowerinfo/';
-    private BORR_PARAMS: string = '/1/true/true/true/true/true';    
-    getBorrowerInfo(ssn: string): string {
+    private BORR_PARAMS: string = '/1/true/true/true/true/true';  
+
+    public async getBorrowerInfo(ssn: string): Promise<string> {
+
+        const tedis = new Tedis({
+            port: 6379,
+            host: "redis" // change to point to env configs before deployment
+        });
         
         const fullUrl: string = `${this.BORR_URL}${ssn}${this.BORR_PARAMS}`;
-        var borrowerInfoData: IBorrowerInfoModel;
 
         // get borrower for redis
+        var borrower = await tedis.get(ssn);
 
         // if we didnt get a borrower, go get it from service, throw it in redis, and return value
-        if (!borrowerInfoData){
-
+        if (!borrower){
+            return get(fullUrl).then(body => {
+                tedis.set(ssn, body);
+                return body;
+            }).catch(e => console.log(e));
+        }else{
+            return borrower.toString();
         }
-        return '';
+        return 'borrower data not found';
     }
 }
