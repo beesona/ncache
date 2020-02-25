@@ -28,6 +28,6 @@ export class BorrowerInfoManager {
         }else{
             return borrower.toString();
         }
-        return 'borrower data not found';
+
     }
 }
