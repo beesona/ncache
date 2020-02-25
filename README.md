@@ -7,7 +7,7 @@ nCache- A simple caching example using Containerized Node and Redis
 - Docker 19.0.3.1
 
 ### Running Locally
-Note: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
+**Note**: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
 ```
 git clone https://github.com/beesona/ncache.git
 cd ncache
@@ -19,11 +19,12 @@ npm start
 - Any src changes will need to stop the express server (CTRL+C) and rerun ```npm start```
 
 ### Deploying Containers and Running
-Note: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
+**Note**: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
 ```
 cd <project-root-dir>
 docker-compose up
 ```
+- Navigate to localhost:3030 to access the page. (**NOTE**: The docker-compose.yml points the node app to 3030 instead of 3000)
 - Any changes will require the following (ran from the project root)
 ```
 docker-compose down --rmi local
