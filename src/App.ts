@@ -18,7 +18,7 @@ class App {
     private mountRoutes (): void {
         const router = express.Router();
         router.get('/', (req, res) => {
-            res.json({message: 'Two Available Routes: /getdatabyid/:id, and /getdatabyurl/:url'});
+            res.json({message: 'Two Available Routes: /getdatabyid/:id, and /getdatabyurl/:url. try using 003823158 for id endpoint, or "aHR0cDovL2Rldi5pbnRzdmMubmVsbmV0Lm5ldDo0MTA2L2FwaS9tbWEvdjEvYm9ycm93ZXJpbmZvLzAwMzgyMzE1OC8xL3RydWUvdHJ1ZS90cnVlL3RydWUvdHJ1ZQ==" for url (URLs are Base64 Encoded.)'});
         });
 
         router.get('/getdatabyid/:id', (req, res) => {            
