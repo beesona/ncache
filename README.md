@@ -1,4 +1,4 @@
-# ncache
+# nCache
 nCache- A simple caching example using Containerized Node and Redis
 
 ### Dependencies to run locally
