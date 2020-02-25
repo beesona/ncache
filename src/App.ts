@@ -18,7 +18,7 @@ class App {
     private mountRoutes (): void {
         const router = express.Router();
         router.get('/', (req, res) => {
-            res.json({message: 'Two Available Routes: /getdatabyid/:id, and /getdatabyurl/:url. try using 003823158 for id endpoint, or "aHR0cDovL2Rldi5pbnRzdmMubmVsbmV0Lm5ldDo0MTA2L2FwaS9tbWEvdjEvYm9ycm93ZXJpbmZvLzAwMzgyMzE1OC8xL3RydWUvdHJ1ZS90cnVlL3RydWUvdHJ1ZQ==" for url (URLs are Base64 Encoded.)'});
+            res.json({message: 'Two Available Routes: /getdatabyid/:id, and /getdatabyurl/:url. try using 003823158 for id endpoint, or "http%3A%2F%2Fdev.intsvc.nelnet.net%2FHistoryNote%2Fapi%2Fv1%2Fhistorynotes%2F99%2F1%2F003823158%2Fabeeson%3FrequestId%3D5302fe94-7596-41f6-84a8-2977f5c3eecf" for url (URLs are URI Encoded.)'});
         });
 
         router.get('/getdatabyid/:id', (req, res) => {            

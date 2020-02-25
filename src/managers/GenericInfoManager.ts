@@ -18,7 +18,8 @@ export class GenericInfoManager {
 
         // if we didnt get a borrower, go get it from service, throw it in redis, and return value
         if (!data){
-            let decodedUrl = Base64.decode(url);
+            let decodedUrl = decodeURI(url);
+            //let decodedUrl = Base64.decode(url);
             return get(decodedUrl).then(body => {
                 tedis.set(url, body);
                 return body;
