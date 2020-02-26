@@ -3,9 +3,10 @@ services:
   node:
     build: .
     ports:
-    - "3000:3000"
+    - "3030:3030"
     depends_on:
     - redis
+    restart: on-failure
   redis:
     image: redis
     ports:

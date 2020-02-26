@@ -4,14 +4,15 @@
       "module": "commonjs",
       "moduleResolution": "node",
       "outDir": "dist",
-      "sourceMap": true
+      "sourceMap": true,
+      "skipLibCheck": true
     },
     "files": [
       "./node_modules/@types/mocha/index.d.ts",
       "./node_modules/@types/node/index.d.ts"
     ],
     "include": [
-      "./*.ts", "src/*.ts"
+      "./*.ts", "src/*.ts", "src/views/index.html"
     ],
     "exclude": [
       "node_modules"

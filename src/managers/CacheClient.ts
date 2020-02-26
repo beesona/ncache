@@ -1,9 +1,12 @@
 import { Tedis, TedisPool } from "tedis";
 import { IHashObjectModel } from "../models/IHashObjectModel";
 
+interface Hash<T> {
+    [propName: string]: T;
+}
 
 // NOT IMPLEMENTED. Will refactor to implement ICacheClient to decouple redis from app later on...
-export class RedisClient{
+export class CacheClient{
 
     private _client: Tedis;
     
@@ -25,11 +28,18 @@ export class RedisClient{
     }
 
     public async setHash(key: string, data: IHashObjectModel): Promise<string>{
+        let resp: string;
         if (data.id === undefined){
             data.id = this.createKey();
         }
-        this._client.hmset(key, {id: data.id, type: data.type, data: data.data});
-        return 'OK';
+        await this._client.hmset(key, {id: data.id, type: data.type, data: data.data}).then(hashData => {
+            if (hashData == 'OK'){
+                resp = JSON.stringify(data);
+            }else{
+                resp = 'Failed to cache data.';
+            }
+        });
+        return resp;
     }
 
     public async getStringByKey(key: string): Promise<string>{
@@ -44,17 +54,29 @@ export class RedisClient{
         return resp;
     }
 
-    public async getHashByKey(key: string ): Promise<object>{
-        return await this._client.hgetall(key)
+    public async getHashByKey(key: string ): Promise<string>{        
+        let resp: string = '';
+        await this._client.hgetall(key)
         .catch((e) => {
              console.log(e);
              return new Object;
+            }).then(hashData => {
+                if (hashData['data'] === undefined){
+                    resp = undefined;
+                }else{
+                    resp = JSON.stringify(hashData);
+                }
             });
+            return resp;
     }
 
     public async getHashesByQuery(fieldToQuery: string, matchValue: string): Promise<Array<object>>{
 
         return [];
+    }
+
+    close(){
+        this._client.close();
     }
     
     private createKey(): string {

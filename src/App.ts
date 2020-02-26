@@ -2,6 +2,8 @@ import * as express from 'express';
 import {BorrowerInfoManager } from './managers/BorrowerInfoManager';
 import {GenericInfoManager } from './managers/GenericInfoManager';
 
+const path = require('path');
+
 class App {
 
     public express;
@@ -18,7 +20,7 @@ class App {
     private mountRoutes (): void {
         const router = express.Router();
         router.get('/', (req, res) => {
-            res.json({message: 'Two Available Routes: /getdatabyid/:id, and /getdatabyurl/:url. try using 003823158 for id endpoint, or "http%3A%2F%2Fdev.intsvc.nelnet.net%2FHistoryNote%2Fapi%2Fv1%2Fhistorynotes%2F99%2F1%2F003823158%2Fabeeson%3FrequestId%3D5302fe94-7596-41f6-84a8-2977f5c3eecf" for url (URLs are URI Encoded.)'});
+            res.sendFile(path.join(__dirname+'/views/index.html'));
         });
 
         router.get('/getdatabyid/:id', (req, res) => {            
@@ -29,7 +31,7 @@ class App {
 
         router.get('/getdatabyurl/:url', (req, res) => {            
             this.genericInfoManager.getGenericInfo(req.params['url'], req.params['url']).then(val => {
-                res.json({message: val});
+                res.json({message: JSON.parse(val)});
             });
         });
 
@@ -39,10 +41,17 @@ class App {
             });
         });        
 
+        router.get('/test', (req, res) => {            
+            this.genericInfoManager.testGetAndSet().then(val => {
+                res.json({message: val});
+            });
+        });
+
         this.express.use('/', router);
         this.express.use('/getdatabyid/:id', router);
         this.express.use('/getdatabyurl/:url', router);
         this.express.use('/getdatabyurl/:id/:url', router);
+        this.express.use('/test', router);
     }
 }
 

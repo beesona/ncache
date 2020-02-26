@@ -7,6 +7,9 @@ export class BorrowerInfoManager {
     private BORR_URL: string = 'http://dev.intsvc.nelnet.net:4106/api/mma/v1/borrowerinfo/';
     private BORR_PARAMS: string = '/1/true/true/true/true/true';  
 
+    REDIS_PORT = +process.env.REDIS_PORT || 6379;
+    REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
+
     public async getBorrowerInfo(ssn: string): Promise<string> {
 
         const tedis = new Tedis({
