@@ -28,14 +28,21 @@ class App {
         });
 
         router.get('/getdatabyurl/:url', (req, res) => {            
-            this.genericInfoManager.getGenericInfo(req.params['url']).then(val => {
+            this.genericInfoManager.getGenericInfo(req.params['url'], req.params['url']).then(val => {
                 res.json({message: val});
             });
         });
 
+        router.get('/getdatabyurl/:id/:url', (req, res) => {            
+            this.genericInfoManager.getGenericInfo(req.params['url'], req.params['id']).then(val => {
+                res.json({message: val});
+            });
+        });        
+
         this.express.use('/', router);
         this.express.use('/getdatabyid/:id', router);
         this.express.use('/getdatabyurl/:url', router);
+        this.express.use('/getdatabyurl/:id/:url', router);
     }
 }
 
