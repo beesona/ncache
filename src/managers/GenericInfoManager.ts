@@ -1,10 +1,5 @@
-import { Tedis, TedisPool } from "tedis";
 import { get } from 'request-promise-native';
-import { Base64 } from 'js-base64';
 import { CacheClient } from "./CacheClient";
-import { IHashObjectModel } from "../models/IHashObjectModel";
-import { promisify } from 'util';
-import { hostname } from "os";
 
 export class GenericInfoManager {
 
