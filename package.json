@@ -18,6 +18,7 @@
     "@types/node": "^13.7.4",
     "@types/redis": "^2.8.16",
     "@types/request-promise-native": "^1.0.17",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "redis": "^3.0.2",
     "request": "^2.88.2",

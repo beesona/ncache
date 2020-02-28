@@ -47,6 +47,12 @@ class App {
             });
         });
 
+        router.post('/set/', (req, res) => {            
+            this.genericInfoManager.testGetAndSet().then(val => {
+                res.json({message: val});
+            });
+        });
+
         this.express.use('/', router);
         this.express.use('/getdatabyid/:id', router);
         this.express.use('/getdatabyurl/:url', router);
